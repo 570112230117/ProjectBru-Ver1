@@ -2,6 +2,7 @@ package com.bru.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,12 +68,13 @@ public class RepairDao {
 		StringBuilder sql = new StringBuilder();
 		
 		try {
-			sql.append(" SELECT repair_date,repair_name,repair_warranty,repair_waste,repair_appointment,repair_phone FROM repair ");
+			sql.append(" SELECT repair_id,repair_date,repair_name,repair_warranty,repair_waste,repair_appointment,repair_phone FROM repair ");
 			prepared = con.openConnect().prepareStatement(sql.toString());
 			ResultSet rs = prepared.executeQuery();
 			
 			while (rs.next()) {
 				RepairBean bean = new RepairBean();
+				bean.setRepairId(rs.getInt("repair_id"));
 				bean.setRepairDateStr(rs.getString("repair_date"));
 				bean.setRepairname(rs.getString("repair_name"));
 				bean.setRepairWarranty(rs.getString("repair_warranty"));
@@ -90,7 +92,38 @@ public class RepairDao {
 		return list; 
 	}
 	
-	
+	public RepairBean findByidCard (String repairId) throws SQLException{
+		RepairBean bean = new RepairBean();
+		ConnectDB con = new ConnectDB();
+		PreparedStatement prepared = null;
+		StringBuilder sql = new StringBuilder();
+		
+		try {			
+			sql.append(" SELECT * FROM repair WHERE repair_id = ?");
+			prepared = con.openConnect().prepareStatement(sql.toString());
+			prepared.setString(1, repairId);
+			ResultSet rs = prepared.executeQuery();
+			
+			while (rs.next()) {
+				bean.setRepairId(rs.getInt("repairId"));
+				bean.setRepairDateStr(rs.getString("repair_date"));
+				bean.setRepairname(rs.getString("repair_name"));
+				bean.setRepairWarranty(rs.getString("repair_warranty"));
+				bean.setRepairWaste(rs.getString("repair_waste"));
+				bean.setRepairAppointment(rs.getDate("repair_appointment"));
+				bean.setRepairPhone(rs.getString("repair_phone"));
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			if (con != null) {
+				con.openConnect().close();
+			}
+		}
+		return bean;
+	}
 	
 	
 	

@@ -116,7 +116,7 @@
 								type="file" class="form-control-file"
 								id="exampleFormControlFile1">
 						</div>
-						<a type="submit" class="btn btn-success" onclick="insertConfirm()" href="table">ยืนยัน</a>
+						<button type="submit" class="btn btn-success" onclick="insertConfirm()" >ยืนยัน</button>
 						<button type="button" class="btn btn-secondary">ยกเลิก</button>
 					</form>
 				</div>

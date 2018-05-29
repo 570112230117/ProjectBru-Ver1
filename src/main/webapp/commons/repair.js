@@ -37,8 +37,12 @@ function insertConfirm() {
 		data : JSON.stringify(repairBean),
 		dataType : "json",
 		success : function(msg) {
-		console.log('Success')
-		 
+		console.log(msg)
+		window.location.href = msg.page;
+		},
+		error: function() {
+			window.location.href = "table";
+			
 		}
 	});
 	

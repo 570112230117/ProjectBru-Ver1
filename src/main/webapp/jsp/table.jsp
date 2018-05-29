@@ -15,7 +15,9 @@
 	list = (List<RepairBean>) request.getSession().getAttribute("listRepair");
 %>
 </head>
-<body>
+<body >
+<form name="gotorepairmen" action="#" method="POST" >
+<input type="hidden" name="repairId" id="repairId">
 	<div  style="margin-top: 1cm; margin-left: 1cm; margin-right: 1cm; ">
 		<table class="table table-bordered">
 			<thead>
@@ -28,7 +30,7 @@
 					<th class="text-center">สาเหตุ / วิธีแก้ไข</th>
 					<th class="text-center">ผู้รับแจ้ง</th>
 					<th class="text-center">ช่างผู้รับผิดชอบ</th>
-					<th class="text-center">สถานะ</th>
+					<th class="text-center">สถานะ</th>		
 					<th class="text-center">รายละเอียด</th>
 
 				</tr>
@@ -48,7 +50,7 @@
 					<td>ผู้รับแจ้ง</td>
 					<td>ช่างผู้รับผิดชอบ</td>
 					<td>สถานะ</td>
-					<td><a onclick=""><span class="glyphicon glyphicon-file">รายละเอียด</span></a></td>
+					<td><a onclick="gotoRepair(<%=list.get(i).getRepairId()%>)"><span class="glyphicon glyphicon-file">รายละเอียด</span></a></td>
 				</tr>
 				<%
 					}
@@ -56,5 +58,13 @@
 			</tbody>
 		</table>
 	</div>
+	</form>
 </body>
+<script>
+function gotoRepair(filter) {
+	document.getElementById("repairId").value = filter;
+	document.gotorepairmen.action = "gotorepairmen";
+	document.gotorepairmen.submit();
+}
+</script>
 </html>

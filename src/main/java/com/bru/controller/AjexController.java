@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.bru.dao.AjexDao;
 import com.bru.dao.RepairDao;
-import com.bru.model.RepairBean;
 import com.bru.model.TestAjexBean;
 import com.bru.model.TypeAppliances;
 import com.bru.model.TypeProduct;

@@ -11,16 +11,14 @@
 <link href="/css/amnuay.css" rel="stylesheet">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <%
-	List<RepairBean> list = null;
-%>
-
-<%
-	list = (List<RepairBean>) request.getSession().getAttribute("listRepair");
+	String result = "";
+	result = (String) request.getAttribute("repairId");
 %>
 </head>
 <body>
 	<div class="container" style="margin-top: 1cm;">
 		<form>
+		<input type="hidden" id="repairId" value="<%=result%>">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
@@ -30,13 +28,13 @@
 							<label for="inputPassword" class="col-sm-4 col-form-label">วันที่แจ้งซ่อม</label>
 							<div class="col-sm-8">
 								<input type="text" readonly="readonly" class="form-control" id="date"
-								value="<%=list.get(0).getRepairDateStr()%>">
+								value="">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="inputPassword" class="col-sm-4 col-form-label">ชื่อผู้แจ้ง</label>
 							<div class="col-sm-8">
-								<input type="text"  readonly="readonly" class="form-control" id="name" value="<%=list.get(0).getRepairname()%>">
+								<input type="text"  readonly="readonly" class="form-control" id="name" value="">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -49,13 +47,13 @@
 						<div class="form-group row">
 							<label for="inputPassword" class="col-sm-4 col-form-label">โทรศัพท์</label>
 							<div class="col-sm-8">
-								<input type="text" readonly class="form-control" id="phone" value="<%=list.get(0).getRepairPhone()%>">
+								<input type="text" readonly class="form-control" id="phone" value="">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="inputPassword" class="col-sm-4 col-form-label">อีเมล</label>
 							<div class="col-sm-8">
-								<input type="text" readonly class="form-control" id="email" value="<%=list.get(0).getRepairEmail()%>">
+								<input type="text" readonly class="form-control" id="email" value="">
 							</div>
 						</div>
 					</div>
@@ -206,28 +204,26 @@
 	</div>
 	<br><br><br><br>
 </body>
-<script>
+<script language="javascript">
 
-var show = {
-		repairDateStr : $('#date').val(),//id,
-		repairname : $('#name').val(),//id
-		repairAddress : $('#address').val(),
-		repairPhone : $('#phone').val(),
-		repairEmail : $('#email').val(),
-}
-
-$.ajax({
-	type : "GET",
-	url : "/repairmen",
-	contentType : "application/json; charset=utf-8",
-	data : JSON.stringify(show),
-	dataType : "json",
-	success : function(msg) {
-	console.log('Success')
-	$('#repairBean').val();
-	}
+$( document ).ready(function() {
+	$('#name').val('xxxxxxxxxxxxx');//id
+	alert($('#repairId').val())
+	
 });
+
+function xx() {
+	$.ajax({
+		type : "GET",
+		url : "/repairmen",
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success : function(result){
+			
+		}
+	});
+};
+
 </script>
-<!-- $('#a').append('<option value="' + msg[i].id + '">' + msg[i].typeName + '</option>'); -->
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 </html>

@@ -1,7 +1,9 @@
 package com.bru.controller;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,39 +24,37 @@ public class RepairController {
 	public String repair(Model model) {
 		return "repair";
 	}
-	
+	//insert
 	@RequestMapping(value = { "/insertRepair" }, method = RequestMethod.POST, produces = "application/json")
-	public String xxx(@RequestBody RepairBean c) {
+	public Map<String, String> xxx(@RequestBody RepairBean repairBean) {
 		try {
 			repairDao.insert(repairBean);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "repair";
-	}
-	@RequestMapping(value = { "/repairmen" }, method = RequestMethod.GET)
-	public String show(@RequestBody RepairBean repairmen) {
-		try {
-			repairDao.findAll();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return "repairmen";
+		Map<String, String> xxx = new HashMap<String, String>();
+		return xxx;
 	}
 
+	//ตาราง
 	@RequestMapping(value = { "/table" }, method = RequestMethod.GET)
-	public String xx(HttpServletRequest request) {
+	public String table(HttpServletRequest request) {
 		List<RepairBean> list = new ArrayList<>();
 		list = repairDao.findAll();
 		request.getSession().setAttribute("listRepair", list);
-		
 		return "table";
 	}
-	@RequestMapping(value = { "/repairmen"}, method = RequestMethod.GET)
-	public String repairmen(HttpServletRequest request) {
-		List<RepairBean> list = new ArrayList<>();
-		list = repairDao.findAll();
-		request.getSession().setAttribute("listRepair", list);
+
+	//tabel to repairmen
+	@RequestMapping("/gotorepairmen")
+	public String gotorepairmen(Model model, String repairId, HttpServletRequest request) {
+		try {
+			request.getSession().setAttribute("repairId", repairId);
+			model.addAttribute("repairId", repairId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "repairmen";
+
 	}
 }
